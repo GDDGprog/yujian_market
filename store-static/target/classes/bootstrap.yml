@@ -1,0 +1,9 @@
+server:
+  port: 3002
+spring:
+  application:
+    name: static-service  # 程序名就是服务名
+  cloud:
+    nacos:
+      # 如果注册中心不在本机,需要移到本位置,否则一致查找本地:8848端口!
+      server-addr: 192.168.200.130:8848 #注册中心

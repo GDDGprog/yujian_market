@@ -1,0 +1,4 @@
+com\yujian\user\service\impl\UserServiceImpl.class
+com\yujian\user\service\UserService.class
+com\yujian\user\controller\UserController.class
+com\yujian\user\mapper\UserMapper.class
