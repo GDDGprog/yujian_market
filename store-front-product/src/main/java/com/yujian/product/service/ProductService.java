@@ -1,14 +1,16 @@
 package com.yujian.product.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yujian.param.ProductByCategoryParam;
 import com.yujian.param.ProductHotParam;
 import com.yujian.param.ProductSearchParam;
 import com.yujian.pojo.Product;
+import com.yujian.to.OrderToProduct;
 import com.yujian.utils.R;
 
 import java.util.List;
 
-public interface ProductService {
+public interface ProductService extends IService<Product> {
     /**
      * 单类别名称,查询热门商品 最多7条数据
      * @param categoryName 类别名称
@@ -79,4 +81,10 @@ public interface ProductService {
      * @return
      */
     List<Product> cartList(List<Integer> productIds);
+
+    /**
+     * 修改库存和增加销售量
+     * @param orderToProducts
+     */
+    void subNumber(List<OrderToProduct> orderToProducts);
 }

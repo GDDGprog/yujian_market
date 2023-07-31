@@ -5,6 +5,8 @@ import com.yujian.param.CartSaveParam;
 import com.yujian.pojo.Cart;
 import com.yujian.utils.R;
 
+import java.util.List;
+
 public interface CartService {
     /**
      * 购物侧数据添加方法
@@ -33,4 +35,10 @@ public interface CartService {
      * @return
      */
     R remove(Cart cart);
+
+    /**
+     * 清空对应id的购物车项
+     * @param cartIds
+     */
+    void claerIds(List<Integer> cartIds);
 }

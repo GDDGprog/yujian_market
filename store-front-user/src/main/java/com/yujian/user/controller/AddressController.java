@@ -1,6 +1,7 @@
 package com.yujian.user.controller;
 
 import com.yujian.param.AddressListParam;
+import com.yujian.param.AddressParam;
 import com.yujian.param.AddressRemoveParam;
 import com.yujian.pojo.Address;
 import com.yujian.user.service.AddressService;
@@ -27,10 +28,12 @@ public class AddressController {
     }
 
     @PostMapping("/save")
-    public R save(@RequestBody @Validated Address address, BindingResult result) {
+    public R save(@RequestBody @Validated AddressParam addressParam, BindingResult result) {
         if (result.hasErrors()){
             return R.fail("参数异常,保存失败!!!");
         }
+        Address address = addressParam.getAdd();
+        address.setUserId(addressParam.getUserId());
         return addressService.save(address);
     }
 

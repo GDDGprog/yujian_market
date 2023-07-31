@@ -12,6 +12,7 @@
         <module name="store-front-product" />
         <module name="store-static" />
         <module name="store-front-cart" />
+        <module name="store-front-order" />
         <module name="store-front-carousel" />
         <module name="store-search" />
         <module name="store-front-collect" />
@@ -27,6 +28,7 @@
       <module name="store-front-cart" options="-parameters" />
       <module name="store-front-category" options="-parameters" />
       <module name="store-front-collect" options="-parameters" />
+      <module name="store-front-order" options="-parameters" />
       <module name="store-front-product" options="-parameters" />
       <module name="store-front-user" options="-parameters" />
       <module name="store-gateway" options="-parameters" />

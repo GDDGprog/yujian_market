@@ -22,7 +22,7 @@ public class Address implements Serializable {
     private String phone;
     @NotBlank
     private String address;
-    @NotNull
+
     @TableField("user_id") //当你定义的属性名字和数据库不匹配时,就使用@TableField来指定用数据库哪个属性
     private Integer userId;
 

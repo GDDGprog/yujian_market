@@ -168,4 +168,10 @@ public class CartServiceImpl implements CartService {
         int delete = cartMapper.delete(queryWrapper);
         return R.ok("购物车数据删除成功!!",delete);
     }
+
+    @Override
+    public void claerIds(List<Integer> cartIds) {
+        cartMapper.deleteBatchIds(cartIds);
+
+    }
 }

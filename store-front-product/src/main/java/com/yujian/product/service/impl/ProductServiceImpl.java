@@ -3,6 +3,7 @@ package com.yujian.product.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yujian.clients.CategoryClient;
 import com.yujian.clients.SearchClient;
 import com.yujian.param.*;
@@ -12,6 +13,7 @@ import com.yujian.pojo.Product;
 import com.yujian.product.mapper.PictureMapper;
 import com.yujian.product.mapper.ProductMapper;
 import com.yujian.product.service.ProductService;
+import com.yujian.to.OrderToProduct;
 import com.yujian.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl extends ServiceImpl<ProductMapper,Product> implements ProductService {
 
     @Autowired
     private ProductMapper productMapper;
@@ -225,5 +230,27 @@ public class ProductServiceImpl implements ProductService {
         QueryWrapper<Product> wrapper = new QueryWrapper<>();
         wrapper.in("product_id",productIds);
         return productMapper.selectList(wrapper);
+    }
+
+    /**
+     * 修改库存和增加销售量
+     * @param orderToProducts
+     */
+    @Override
+    public void subNumber(List<OrderToProduct> orderToProducts) {
+        //将集合转成一个map
+        Map<Integer, OrderToProduct> map = orderToProducts.stream().collect(Collectors.toMap(OrderToProduct::getProductId, v -> v));
+        //获取商品的id集合
+        Set<Integer> keySet = map.keySet();
+        //查询集合对应的商品信息
+        List<Product> productList = productMapper.selectBatchIds(keySet);
+        //修改商品信息
+        for (Product product : productList) {
+            Integer num = map.get(product.getProductId()).getNum();
+            product.setProductNum(product.getProductNum()-num);
+            product.setProductSales(product.getProductSales()+num);
+        }
+        //批量更新
+        this.updateBatchById(productList);
     }
 }
